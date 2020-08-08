@@ -5,26 +5,35 @@ namespace CensusAnalyzerProblemTest
 {
     public class Tests
     {
-        static string CSVFilePath = @"C:\Users\user\source\repos\CensusProblem\IndiaStateCensusData.csv";
+
+        //Indian Census Data CSV FILE
+        static string CSVFilePath = @"C:\Users\user\source\repos\CensusProblem\CSV Files\IndiaStateCensusData.csv";
         static string WRONG_CSV_FILE_PATH = @"C:\Users\user\source\repos\CensusProblem\IndiaState.csv";
-        static string WRONG_CSV_FILE_TYPE = @"C:\Users\user\source\repos\CensusProblem\IndiaStateCensusData.txt";
+        static string WRONG_CSV_FILE_TYPE = @"C:\Users\user\source\repos\CensusProblem\CSV Files\IndiaStateCensusData.txt";
         
-        
-        static string INDIA_STATE_CODE_CSV_FILE_PATH = @"C:\Users\user\source\repos\CensusProblem\IndiaStateCode.csv";
+        //Indian State Code CSV File
+        static string INDIA_STATE_CODE_CSV_FILE_PATH = @"C:\Users\user\source\repos\CensusProblem\CSV Files\IndiaStateCode.csv";
         static string WRONG_STATE_CODE_FILE_PATH = @"C:\Users\user\source\CensusAnalyzer\IndiaState.csv";
-        static string WRONG_STATE_CODE_FILE_TYPE = @"C:\Users\user\source\CensusAnalyzer\IndiaStateCode.txt";
+        static string WRONG_STATE_CODE_FILE_TYPE = @"C:\Users\user\source\repos\CensusProblem\CSV Files\IndiaStateCode.txt";
+
+        //HEADER
+        static string indianCensusHeaders = "State,Population,AreaInSqKm,DensityPerSqKm";
+        static string indianStateCodeHeaders = "SrNo,State Name,TIN,StateCode";
+
+        CensusAnalyzer censusAnalyzer;
 
         [SetUp]
         public void Setup()
         {
+            censusAnalyzer = new CensusAnalyzer();
         }
 
         [Test]
         public void givenIndianCensusCSVFileReturnsCorrectRecords()
         {
-            CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            int numOfRecords = censusAnalyzer.loadCensusData(CSVFilePath);
-            Assert.AreEqual(29, numOfRecords);
+
+            string[] numOfRecords = censusAnalyzer.loadCensusData(CSVFilePath, indianCensusHeaders);
+            Assert.AreEqual(29, numOfRecords.Length);
         }
 
         [Test]
@@ -32,8 +41,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                censusAnalyzer.loadCensusData(WRONG_CSV_FILE_PATH);
+                censusAnalyzer.loadCensusData(WRONG_CSV_FILE_PATH,indianCensusHeaders);
             }
             catch (CensusAnalyserException e)
             {
@@ -47,8 +55,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                censusAnalyzer.loadCensusData(WRONG_CSV_FILE_TYPE);
+                censusAnalyzer.loadCensusData(WRONG_CSV_FILE_TYPE,indianCensusHeaders);
             }
             catch (CensusAnalyserException e)
             {
@@ -62,8 +69,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                censusAnalyzer.loadCensusData(CSVFilePath);
+                censusAnalyzer.loadCensusData(CSVFilePath,indianCensusHeaders);
             }
             catch (CensusAnalyserException e)
             {
@@ -77,8 +83,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                int totalItems = censusAnalyzer.loadCensusData(CSVFilePath);
+                censusAnalyzer.loadCensusData(CSVFilePath,indianCensusHeaders);
             }
             catch (CensusAnalyserException e)
             {
@@ -93,9 +98,8 @@ namespace CensusAnalyzerProblemTest
         [Test]
         public void givenIndianStateCodeCSVFileReturnsCorrectRecords()
         {
-            CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            int numOfRecords = censusAnalyzer.loadStateCodeData(INDIA_STATE_CODE_CSV_FILE_PATH);
-            Assert.AreEqual(37, numOfRecords);
+            string[] numOfRecords = censusAnalyzer.loadCensusData(INDIA_STATE_CODE_CSV_FILE_PATH,indianStateCodeHeaders);
+            Assert.AreEqual(37, numOfRecords.Length);
         }
 
         [Test]
@@ -103,8 +107,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                censusAnalyzer.loadStateCodeData(WRONG_STATE_CODE_FILE_PATH);
+                censusAnalyzer.loadCensusData(WRONG_STATE_CODE_FILE_PATH,indianStateCodeHeaders);
             }
             catch (CensusAnalyserException e)
             {
@@ -118,8 +121,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                censusAnalyzer.loadStateCodeData(WRONG_STATE_CODE_FILE_TYPE);
+                censusAnalyzer.loadCensusData(WRONG_STATE_CODE_FILE_TYPE,indianStateCodeHeaders);
             }
             catch (CensusAnalyserException e)
             {
@@ -133,8 +135,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                censusAnalyzer.loadStateCodeData(INDIA_STATE_CODE_CSV_FILE_PATH);
+                censusAnalyzer.loadCensusData(INDIA_STATE_CODE_CSV_FILE_PATH,indianStateCodeHeaders);
             }
             catch (CensusAnalyserException e)
             {
@@ -148,8 +149,7 @@ namespace CensusAnalyzerProblemTest
         {
             try
             {
-                CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-                int totalItems = censusAnalyzer.loadStateCodeData(INDIA_STATE_CODE_CSV_FILE_PATH);
+                censusAnalyzer.loadCensusData(INDIA_STATE_CODE_CSV_FILE_PATH,indianStateCodeHeaders);
             }
             catch (CensusAnalyserException e)
             {
