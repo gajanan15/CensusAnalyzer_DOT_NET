@@ -4,20 +4,11 @@ using System.Linq;
 
 namespace CensusProblem
 {
-    public class CensusAnalyzer
+    public class CensusAnalyzer : ICsvBuilder
     {
-        public delegate object CSVData();
+        public delegate object CSVData(string filePath, string dataHeader);
 
-        string filePath;
-        string dataHeader;
-
-        public CensusAnalyzer(string filePath, string dataHeader)
-        {
-            this.filePath = filePath;
-            this.dataHeader = dataHeader;
-        }
-
-        public object loadCensusData()
+        public object loadCensusData(string filePath, string dataHeader)
         {
             if (!File.Exists(filePath))
             {
