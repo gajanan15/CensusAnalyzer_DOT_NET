@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj": {}
+    "C:\\Users\\Admin\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj": {
+    "C:\\Users\\Admin\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj",
         "projectName": "CensusProblem",
-        "projectPath": "C:\\Users\\user\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\CensusProblem\\CensusProblem\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\source\\repos\\CensusProblem\\CensusProblem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -52,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

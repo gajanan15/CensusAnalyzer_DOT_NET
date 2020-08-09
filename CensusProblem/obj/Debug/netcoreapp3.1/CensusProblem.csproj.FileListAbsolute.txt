@@ -7,3 +7,12 @@ C:\Users\user\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\C
 C:\Users\user\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.csproj.CoreCompileInputs.cache
 C:\Users\user\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.dll
 C:\Users\user\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.pdb
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\bin\Debug\netcoreapp3.1\CensusProblem.deps.json
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\bin\Debug\netcoreapp3.1\CensusProblem.dll
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\bin\Debug\netcoreapp3.1\CensusProblem.pdb
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.AssemblyInfo.cs
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.dll
+C:\Users\Admin\source\repos\CensusProblem\CensusProblem\obj\Debug\netcoreapp3.1\CensusProblem.pdb
