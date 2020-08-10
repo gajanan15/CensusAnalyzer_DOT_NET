@@ -33,7 +33,8 @@ namespace CensusAnalyzerProblemTest
         CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
         CSVData csvData;
         CsvFactory csvFactory;
-        Dictionary<int,string> numOfRecords = new Dictionary<int, string>();
+        Dictionary<int,string> numOfRecordsCensusData = new Dictionary<int, string>();
+        Dictionary<int, string> numOfRecordsStateData = new Dictionary<int, string>();
 
         [SetUp]
         public void Setup()
@@ -46,8 +47,8 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.LoadCensusData);
-            numOfRecords = (Dictionary<int,string>)csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
-            Assert.AreEqual(29, numOfRecords.Count);
+            numOfRecordsCensusData = (Dictionary<int,string>)csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
+            Assert.AreEqual(29, numOfRecordsCensusData.Count);
         }
 
         [Test]
@@ -97,8 +98,10 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.LoadCensusData);
-            numOfRecords = (Dictionary<int, string>)csvData(INDIA_STATE_CODE_CSV_FILE_PATH, INDIAN_STATE_CODE_HEADERS);
-            Assert.AreEqual(37, numOfRecords.Count);
+            numOfRecordsStateData = (Dictionary<int, string>)csvData(INDIA_STATE_CODE_CSV_FILE_PATH, INDIAN_STATE_CODE_HEADERS);
+            numOfRecordsCensusData = (Dictionary<int, string>)csvData(CSVFilePath, INDIAN_CENSUS_HEADERS);
+            Assert.AreEqual(29, numOfRecordsCensusData.Count);
+            Assert.AreEqual(37, numOfRecordsStateData.Count);
         }
 
         [Test]
@@ -107,7 +110,9 @@ namespace CensusAnalyzerProblemTest
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.LoadCensusData);
             var wrongFile = Assert.Throws<CensusAnalyserException>(() => csvData(WRONG_STATE_CODE_FILE_PATH, INDIAN_STATE_CODE_HEADERS));
+            var wrongCensusFile = Assert.Throws<CensusAnalyserException>(() => csvData(WRONG_CSV_FILE_PATH, INDIAN_CENSUS_HEADERS));
             Assert.AreEqual(CensusAnalyserException.ExceptionType.FILE_NOT_FOUND, wrongFile.type);
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.FILE_NOT_FOUND, wrongCensusFile.type);
 
         }
 
