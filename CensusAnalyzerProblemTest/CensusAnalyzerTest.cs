@@ -24,6 +24,7 @@ namespace CensusAnalyzerProblemTest
         static string WRONG_STATE_CODE_FILE_TYPE = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IndiaStateCode.txt";
         static string INCORRECT_DELIMITER_INDIAN_STATE_CODE_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectDelimiterIndiaStateCode.csv";
         static string INCORRECT_HEADER_INDIAN_STATE_CODE_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectHeaderIndianStateCode.csv";
+        static string SORTED_INDIAN_STATE_CODE_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\SortedIndiaStateCode.csv";
 
         //HEADER
         static string INDIAN_CENSUS_HEADERS = "State,Population,AreaInSqKm,DensityPerSqKm";
@@ -140,6 +141,8 @@ namespace CensusAnalyzerProblemTest
 
         }
 
+        //Sorted Data Indian Census Data
+
         [Test]
         public void givenIndiaCensusData_WhenSortedOnState_ShouldReturnSortedResult()
         {
@@ -155,6 +158,25 @@ namespace CensusAnalyzerProblemTest
             string[] sortedIndianCensusData = JsonConvert.DeserializeObject<string[]>(sortedData);
             int lengthOfSoretedData = sortedIndianCensusData.Length-1;
             Assert.AreEqual("West Bengal,91347736,88752,1029", sortedIndianCensusData[lengthOfSoretedData]);
+        }
+
+        //Sorted Indian State Code Data
+
+        [Test]
+        public void givenIndiaStateCodeData_WhenSortedOnStateCode_ShouldReturnSortedResult()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(INDIA_STATE_CODE_CSV_FILE_PATH, SORTED_INDIAN_STATE_CODE_DATA).ToString();
+            string[] sortedIndianCensusData = JsonConvert.DeserializeObject<string[]>(sortedData);
+            Assert.AreEqual("3,Andhra Pradesh New,37,AD", sortedIndianCensusData[0]);
+        }
+
+        [Test]
+        public void givenIndiaStateCodeData_WhenSortedOnState_ShouldReturnLastRecord()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(INDIA_STATE_CODE_CSV_FILE_PATH, SORTED_INDIAN_STATE_CODE_DATA).ToString();
+            string[] sortedIndianCensusData = JsonConvert.DeserializeObject<string[]>(sortedData);
+            int lengthOfSoretedData = sortedIndianCensusData.Length - 1;
+            Assert.AreEqual("37,West Bengal,19,WB", sortedIndianCensusData[lengthOfSoretedData]);
         }
     }
 }

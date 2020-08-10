@@ -49,10 +49,18 @@ namespace CensusProblem
         {
             string[] lines = File.ReadAllLines(filePath);
             var data = lines.Skip(1);
+            int index;
+            if (sortedFilePath.Contains("filePathSorted"))
+            {
+                index = 0;
+            }
+            else {
+                index = 3;
+            }
             var sorted =
                 from line in data
                 let x = line.Split(',')
-                orderby x[0]
+                orderby x[index]
                 select line;
             File.WriteAllLines(sortedFilePath, lines.Take(1).Concat(sorted.ToArray()));
             List<string> sortedData = sorted.ToList<string>();
