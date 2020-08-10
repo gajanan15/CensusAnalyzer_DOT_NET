@@ -33,7 +33,7 @@ namespace CensusAnalyzerProblemTest
         CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
         CSVData csvData;
         CsvFactory csvFactory;
-        List<string> numOfRecords = new List<string>();
+        Dictionary<int,string> numOfRecords = new Dictionary<int, string>();
 
         [SetUp]
         public void Setup()
@@ -46,7 +46,7 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.LoadCensusData);
-            numOfRecords = (List<string>)csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
+            numOfRecords = (Dictionary<int,string>)csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
             Assert.AreEqual(29, numOfRecords.Count);
         }
 
@@ -97,7 +97,7 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.LoadCensusData);
-            numOfRecords = (List<string>)csvData(INDIA_STATE_CODE_CSV_FILE_PATH,INDIAN_STATE_CODE_HEADERS);
+            numOfRecords = (Dictionary<int, string>)csvData(INDIA_STATE_CODE_CSV_FILE_PATH, INDIAN_STATE_CODE_HEADERS);
             Assert.AreEqual(37, numOfRecords.Count);
         }
 

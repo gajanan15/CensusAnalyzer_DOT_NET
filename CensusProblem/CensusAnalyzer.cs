@@ -9,12 +9,16 @@ namespace CensusProblem
 {
     public class CensusAnalyzer : ICsvBuilder
     {
-        List<string> data = new List<string>();
+        string[] data;
+        public Dictionary<int, string> dataDictionary;
+        int counter = 0;
 
         public delegate object CSVData(string filePath, string dataHeader);
 
         public object LoadCensusData(string filePath, string dataHeader)
         {
+            dataDictionary = new Dictionary<int, string>();
+
             if (!File.Exists(filePath))
             {
                 throw new CensusAnalyserException("File Not Found", CensusAnalyserException.ExceptionType.FILE_NOT_FOUND);
@@ -26,7 +30,7 @@ namespace CensusProblem
             }
 
 
-             data = File.ReadAllLines(filePath).ToList();
+             data = File.ReadAllLines(filePath);
 
             if (data.ElementAt(0) != dataHeader)
             {
@@ -35,13 +39,16 @@ namespace CensusProblem
 
             foreach (string delimiter in data)
             {
+                counter++;
+                dataDictionary.Add(counter, delimiter);
+
                 if (!delimiter.Contains(","))
                 {
                     throw new CensusAnalyserException("Invalid Delimiter", CensusAnalyserException.ExceptionType.INVALID_DELIMITER);
                 }
             }
 
-            return data.Skip(1).ToList();
+            return dataDictionary.Skip(1).ToDictionary(d=> d.Key, d=> d.Value);
 
         }
 
