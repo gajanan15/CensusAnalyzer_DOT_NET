@@ -1,5 +1,6 @@
 using CensusProblem;
 using NUnit.Framework;
+using System.Collections.Generic;
 using static CensusProblem.CensusAnalyzer;
 
 namespace CensusAnalyzerProblemTest
@@ -28,6 +29,7 @@ namespace CensusAnalyzerProblemTest
         CensusAnalyzer censusAnalyzer;
         CSVData csvData;
         CsvFactory csvFactory;
+        List<string> numOfRecords = new List<string>();
         [SetUp]
         public void Setup()
         {
@@ -39,8 +41,8 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.loadCensusData);
-            string[] numOfRecords = (string[])csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
-            Assert.AreEqual(29, numOfRecords.Length);
+            numOfRecords = (List<string>)csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
+            Assert.AreEqual(29, numOfRecords.Count);
         }
 
         [Test]
@@ -90,8 +92,8 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.loadCensusData);
-            string[] numOfRecords = (string[])csvData(INDIA_STATE_CODE_CSV_FILE_PATH,INDIAN_STATE_CODE_HEADERS);
-            Assert.AreEqual(37, numOfRecords.Length);
+            numOfRecords = (List<string>)csvData(INDIA_STATE_CODE_CSV_FILE_PATH,INDIAN_STATE_CODE_HEADERS);
+            Assert.AreEqual(37, numOfRecords.Count);
         }
 
         [Test]
@@ -133,6 +135,5 @@ namespace CensusAnalyzerProblemTest
             Assert.AreEqual(CensusAnalyserException.ExceptionType.INVALID_HEADER, incorrectHeader.type);
 
         }
-
     }
 }

@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace CensusProblem
 {
     public class CensusAnalyzer : ICsvBuilder
     {
+        List<string> data = new List<string>();
+
         public delegate object CSVData(string filePath, string dataHeader);
 
         public object loadCensusData(string filePath, string dataHeader)
@@ -21,9 +25,9 @@ namespace CensusProblem
             }
 
 
-            string[] data = File.ReadAllLines(filePath);
+             data = File.ReadAllLines(filePath).ToList();
 
-            if (data[0] != dataHeader)
+            if (data.ElementAt(0) != dataHeader)
             {
                 throw new CensusAnalyserException("Invalid Header", CensusAnalyserException.ExceptionType.INVALID_HEADER);
             }
@@ -36,7 +40,7 @@ namespace CensusProblem
                 }
             }
 
-            return data.Skip(1).ToArray();
+            return data.Skip(1).ToList();
 
         }
     }
