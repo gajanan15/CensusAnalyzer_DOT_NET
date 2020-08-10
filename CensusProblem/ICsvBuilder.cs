@@ -6,6 +6,6 @@ namespace CensusProblem
 {
    public interface ICsvBuilder
     {
-        public object loadCensusData(string filePath, string dataHeader);
+        public object LoadCensusData(string filePath, string dataHeader);
     }
 }

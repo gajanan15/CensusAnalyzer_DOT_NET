@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "u9vUufE6mcLt7AuAkXml2eq0KxfQAnv7yqMiC6NrsXoXRJ8izbQd9YRsjMdqs/1cpXaqks2E8RNoRnOyqBl+gA==",
+  "dgSpecHash": "T/vQPypjbezq3iV8XUeyAKYDFoZb6d+akg9EJlbqcfxQ8Dd2baMIi2HPEE9S2wbl/pPk1mirjo+l7KzniJQTpw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\source\\repos\\CensusProblem\\CensusProblem\\CensusProblem.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
