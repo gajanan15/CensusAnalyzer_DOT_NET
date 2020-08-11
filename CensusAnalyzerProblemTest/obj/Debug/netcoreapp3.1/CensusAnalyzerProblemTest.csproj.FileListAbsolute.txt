@@ -194,3 +194,4 @@ C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\obj\Debug\ne
 C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\obj\Debug\netcoreapp3.1\CensusAnalyzerProblemTest.dll
 C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\obj\Debug\netcoreapp3.1\CensusAnalyzerProblemTest.pdb
 C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\obj\Debug\netcoreapp3.1\CensusAnalyzerProblemTest.genruntimeconfig.cache
+C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\bin\Debug\netcoreapp3.1\CsvHelper.dll

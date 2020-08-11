@@ -1,4 +1,5 @@
 using CensusProblem;
+using CensusProblem.POCO;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -33,8 +34,8 @@ namespace CensusAnalyzerProblemTest
         CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
         CSVData csvData;
         CsvFactory csvFactory;
-        Dictionary<int,string> numOfRecordsCensusData = new Dictionary<int, string>();
-        Dictionary<int, string> numOfRecordsStateData = new Dictionary<int, string>();
+        Dictionary<int,CensusDTO> numOfRecordsCensusData = new Dictionary<int, CensusDTO>();
+        Dictionary<int, CensusDTO> numOfRecordsStateData = new Dictionary<int, CensusDTO>();
 
         [SetUp]
         public void Setup()
@@ -47,7 +48,7 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.LoadCensusData);
-            numOfRecordsCensusData = (Dictionary<int,string>)csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
+            numOfRecordsCensusData = (Dictionary<int, CensusDTO>)csvData(CSVFilePath,INDIAN_CENSUS_HEADERS);
             Assert.AreEqual(29, numOfRecordsCensusData.Count);
         }
 
@@ -98,8 +99,8 @@ namespace CensusAnalyzerProblemTest
         {
             censusAnalyzer = (CensusAnalyzer)csvFactory.getClassObject();
             csvData = new CSVData(censusAnalyzer.LoadCensusData);
-            numOfRecordsStateData = (Dictionary<int, string>)csvData(INDIA_STATE_CODE_CSV_FILE_PATH, INDIAN_STATE_CODE_HEADERS);
-            numOfRecordsCensusData = (Dictionary<int, string>)csvData(CSVFilePath, INDIAN_CENSUS_HEADERS);
+            numOfRecordsStateData = (Dictionary<int, CensusDTO>)csvData(INDIA_STATE_CODE_CSV_FILE_PATH, INDIAN_STATE_CODE_HEADERS);
+            numOfRecordsCensusData = (Dictionary<int, CensusDTO>)csvData(CSVFilePath, INDIAN_CENSUS_HEADERS);
             Assert.AreEqual(29, numOfRecordsCensusData.Count);
             Assert.AreEqual(37, numOfRecordsStateData.Count);
         }
@@ -151,37 +152,38 @@ namespace CensusAnalyzerProblemTest
         [Test]
         public void givenIndiaCensusData_WhenSortedOnState_ShouldReturnSortedResult()
         {
-            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_SORTED_FILE_PATH).ToString();
-            string[] sortedIndianCensusData = JsonConvert.DeserializeObject<string[]>(sortedData);
-            Assert.AreEqual("Andhra Pradesh,49386799,162968,303", sortedIndianCensusData[0]);
+            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_CENSUS_HEADERS, "stateName").ToString();
+            StateCensusCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCensusCSV[]>(sortedData);
+            Assert.AreEqual("Andhra Pradesh", sortedIndianCensusData[0].stateName);
         }
 
         [Test]
-         public void givenIndiaCensusData_WhenSortedOnState_ShouldReturnLastRecord()
+        public void givenIndiaCensusData_WhenSortedOnState_ShouldReturnLastRecord()
         {
-            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_SORTED_FILE_PATH).ToString();
-            string[] sortedIndianCensusData = JsonConvert.DeserializeObject<string[]>(sortedData);
-            int lengthOfSoretedData = sortedIndianCensusData.Length-1;
-            Assert.AreEqual("West Bengal,91347736,88752,1029", sortedIndianCensusData[lengthOfSoretedData]);
+            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_CENSUS_HEADERS,"stateName").ToString();
+            StateCensusCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCensusCSV[]>(sortedData);
+            int lengthOfSoretedData = sortedIndianCensusData.Length - 1;
+            Assert.AreEqual("West Bengal", sortedIndianCensusData[lengthOfSoretedData].stateName);
         }
+
 
         //Sorted Indian State Code Data
 
         [Test]
         public void givenIndiaStateCodeData_WhenSortedOnStateCode_ShouldReturnSortedResult()
         {
-            string sortedData = censusAnalyzer.GetSortedData(INDIA_STATE_CODE_CSV_FILE_PATH, SORTED_INDIAN_STATE_CODE_DATA).ToString();
-            string[] sortedIndianCensusData = JsonConvert.DeserializeObject<string[]>(sortedData);
-            Assert.AreEqual("3,Andhra Pradesh New,37,AD", sortedIndianCensusData[0]);
+            string sortedData = censusAnalyzer.GetSortedData(INDIA_STATE_CODE_CSV_FILE_PATH, INDIAN_STATE_CODE_HEADERS, "stateCode").ToString();
+            StateCodeCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCodeCSV[]>(sortedData);
+            Assert.AreEqual("AD", sortedIndianCensusData[0].stateCode);
         }
 
         [Test]
         public void givenIndiaStateCodeData_WhenSortedOnState_ShouldReturnLastRecord()
         {
-            string sortedData = censusAnalyzer.GetSortedData(INDIA_STATE_CODE_CSV_FILE_PATH, SORTED_INDIAN_STATE_CODE_DATA).ToString();
-            string[] sortedIndianCensusData = JsonConvert.DeserializeObject<string[]>(sortedData);
+            string sortedData = censusAnalyzer.GetSortedData(INDIA_STATE_CODE_CSV_FILE_PATH, INDIAN_STATE_CODE_HEADERS, "stateCode").ToString();
+            StateCodeCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCodeCSV[]>(sortedData);
             int lengthOfSoretedData = sortedIndianCensusData.Length - 1;
-            Assert.AreEqual("37,West Bengal,19,WB", sortedIndianCensusData[lengthOfSoretedData]);
+            Assert.AreEqual("WB", sortedIndianCensusData[lengthOfSoretedData].stateCode);
         }
     }
 }

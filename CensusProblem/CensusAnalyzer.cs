@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CensusProblem.POCO;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,14 +11,14 @@ namespace CensusProblem
     public class CensusAnalyzer : ICsvBuilder
     {
         string[] data;
-        public Dictionary<int, string> dataDictionary;
+        public Dictionary<int, CensusDTO> stateDictionary = new Dictionary<int, CensusDTO>();
         int counter = 0;
 
         public delegate object CSVData(string filePath, string dataHeader);
 
         public object LoadCensusData(string filePath, string dataHeader)
         {
-            dataDictionary = new Dictionary<int, string>();
+            stateDictionary = new Dictionary<int, CensusDTO>();
 
             if (!File.Exists(filePath))
             {
@@ -37,41 +38,47 @@ namespace CensusProblem
                 throw new CensusAnalyserException("Invalid Header", CensusAnalyserException.ExceptionType.INVALID_HEADER);
             }
 
-            foreach (string delimiter in data)
+            foreach (string delimiter in data.Skip(1))
             {
-                counter++;
-                dataDictionary.Add(counter, delimiter);
-
+          
                 if (!delimiter.Contains(","))
                 {
                     throw new CensusAnalyserException("Invalid Delimiter", CensusAnalyserException.ExceptionType.INVALID_DELIMITER);
                 }
-            }
 
-            return dataDictionary.Skip(1).ToDictionary(d=> d.Key, d=> d.Value);
+                counter++;
+                string[] column = delimiter.Split(",");
+                if (filePath.Contains("IndiaStateCensusData")) {
+                    stateDictionary.Add(counter,new CensusDTO(new StateCensusCSV(column[0], column[1], column[2], column[3])));
+                }
+                if (filePath.Contains("IndiaStateCode")) {
+                    stateDictionary.Add(counter, new CensusDTO(new StateCodeCSV(column[0], column[1], column[2], column[3])));
+                }
+            }
+            if (filePath.Contains("IndiaStateCensusData"))
+                return stateDictionary.ToDictionary(d => d.Key, d => d.Value);
+            return stateDictionary.ToDictionary(d=> d.Key, d=> d.Value);
 
         }
 
-        public object GetSortedData(string filePath, string sortedFilePath)
+        public object GetSortedData(string filePath, string header,string field)
         {
-            string[] lines = File.ReadAllLines(filePath);
-            var data = lines.Skip(1);
-            int index;
-            if (sortedFilePath.Contains("filePathSorted"))
+            var censusData = (Dictionary<int, CensusDTO>)LoadCensusData(filePath, header);
+            List<CensusDTO> censusList = censusData.Values.ToList();
+            List<CensusDTO> sortedLists = getSoretdField(field, censusList);
+            return JsonConvert.SerializeObject(sortedLists);
+        }
+
+
+        public List<CensusDTO> getSoretdField(string filed,List<CensusDTO> censusList) {
+            switch (filed)
             {
-                index = 0;
-            }
-            else {
-                index = 3;
-            }
-            var sorted =
-                from line in data
-                let x = line.Split(',')
-                orderby x[index]
-                select line;
-            File.WriteAllLines(sortedFilePath, lines.Take(1).Concat(sorted.ToArray()));
-            List<string> sortedData = sorted.ToList<string>();
-            return JsonConvert.SerializeObject(sortedData);
+                case "stateName": 
+                    return censusList.OrderBy(x => x.stateName).ToList();
+                case "stateCode": 
+                    return censusList.OrderBy(x => x.stateCode).ToList();
+                default: return censusList;
+            }    
         }
     }
 }

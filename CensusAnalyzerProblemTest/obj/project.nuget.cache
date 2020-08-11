@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ubQSA0BkOZeTXXIrotSx5f60i806dPRYCLXuGmLILIw7OFLhSSQHEzB0+OaPhrb3KiCA8dAohb3gmlgal9Cczw==",
+  "dgSpecHash": "ivpWVZEU6sq96l9zu2UaiL7Lzjhkeot0tUdl6rTNaPD2kGq70LL6B2lQpH8tDNvXVFDlDHrVR7/KpBE1NGgaoQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\source\\repos\\CensusProblem\\CensusAnalyzerProblemTest\\CensusAnalyzerProblemTest.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\csvhelper\\15.0.5\\csvhelper.15.0.5.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.codecoverage\\16.4.0\\microsoft.codecoverage.16.4.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.dotnet.internalabstractions\\1.0.0\\microsoft.dotnet.internalabstractions.1.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.net.test.sdk\\16.4.0\\microsoft.net.test.sdk.16.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
