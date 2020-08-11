@@ -207,6 +207,22 @@ namespace CensusAnalyzerProblemTest
             Assert.AreEqual("Arunachal Pradesh", sortedIndianCensusData[0].stateName);
         }
 
+        [Test]
+        public void givenIndianCensusData_WhenSortedOnTotalArea_ShouldReturnLargestState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_CENSUS_HEADERS, "area", "DESC").ToString();
+            StateCensusCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCensusCSV[]>(sortedData);
+            Assert.AreEqual("Rajasthan", sortedIndianCensusData[0].stateName);
+        }
+
+        [Test]
+        public void givenIndianCensusData_WhenSortedOnTotalArea_ShouldReturnSmallestState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_CENSUS_HEADERS, "area", "ASC").ToString();
+            StateCensusCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCensusCSV[]>(sortedData);
+            Assert.AreEqual("Goa", sortedIndianCensusData[0].stateName);
+        }
+
 
         //Sorted Indian State Code Data
 
