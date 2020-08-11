@@ -184,13 +184,29 @@ namespace CensusAnalyzerProblemTest
             Assert.AreEqual("Sikkim", sortedIndianCensusData[0].stateName);
         }
 
-
         [Test]
         public void givenIndianCensusData_WhenIncorrectFile_ShouldThrowException()
         {
             var sortedIndianCensusData = Assert.Throws<CensusAnalyserException>(() => censusAnalyzer.GetSortedData(WRONG_CSV_FILE_PATH, INDIAN_CENSUS_HEADERS, "population", "DESC"));
             Assert.AreEqual(CensusAnalyserException.ExceptionType.FILE_NOT_FOUND, sortedIndianCensusData.type);
         }
+
+        [Test]
+        public void givenIndianCensusData_WhenSortedOnDensity_ShouldReturnMostPopulationDensityState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_CENSUS_HEADERS, "density", "DESC").ToString();
+            StateCensusCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCensusCSV[]>(sortedData);
+            Assert.AreEqual("Bihar", sortedIndianCensusData[0].stateName);
+        }
+
+        [Test]
+        public void givenIndianCensusData_WhenSortedOnDensity_ShouldReturnLeastPopulationDensityState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(CSVFilePath, INDIAN_CENSUS_HEADERS, "density", "ASC").ToString();
+            StateCensusCSV[] sortedIndianCensusData = JsonConvert.DeserializeObject<StateCensusCSV[]>(sortedData);
+            Assert.AreEqual("Arunachal Pradesh", sortedIndianCensusData[0].stateName);
+        }
+
 
         //Sorted Indian State Code Data
 
