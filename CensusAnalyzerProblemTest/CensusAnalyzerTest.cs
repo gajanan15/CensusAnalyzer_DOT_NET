@@ -17,7 +17,6 @@ namespace CensusAnalyzerProblemTest
         static string WRONG_CSV_FILE_TYPE = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IndiaStateCensusData.txt";
         static string INCORRECT_DELIMITER_INDIAN_CENSUS_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectDelimiterIndiaCensusData.csv";
         static string INCORRECT_HEADER_INDIAN_CENSUS_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectHeaderIndianCensus.csv";
-        static string INDIAN_SORTED_FILE_PATH = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\filePathSorted.csv";
 
         //Indian State Code CSV File
         static string INDIA_STATE_CODE_CSV_FILE_PATH = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IndiaStateCode.csv";
@@ -25,11 +24,21 @@ namespace CensusAnalyzerProblemTest
         static string WRONG_STATE_CODE_FILE_TYPE = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IndiaStateCode.txt";
         static string INCORRECT_DELIMITER_INDIAN_STATE_CODE_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectDelimiterIndiaStateCode.csv";
         static string INCORRECT_HEADER_INDIAN_STATE_CODE_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectHeaderIndianStateCode.csv";
-        static string SORTED_INDIAN_STATE_CODE_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\SortedIndiaStateCode.csv";
+
+        //US Census Data
+
+        static string UC_CENSUS_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\USCensusData.csv";
+        static string WRONG_US_CSV_FILE_PATH = @"C:\Users\user\source\repos\CensusProblem\USCensusData.csv";
+        static string WRONG_US_CSV_FILE_TYPE = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\USCensusData.txt";
+        static string INCORRECT_DELIMITER_US_CENSUS_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectDelimiterUSCensusData.csv";
+        static string INCORRECT_HEADER_US_CENSUS_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectHeaderUSCensusData.csv";
+
+
 
         //HEADER
         static string INDIAN_CENSUS_HEADERS = "State,Population,AreaInSqKm,DensityPerSqKm";
         static string INDIAN_STATE_CODE_HEADERS = "SrNo,State Name,TIN,StateCode";
+        static string US_CENSUS_DATA_HEADERS = "State Id,State,Population,Housing units,Total area,Water area,Land area,Population Density,Housing Density";
 
         CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
         CSVData csvData;
@@ -243,5 +252,53 @@ namespace CensusAnalyzerProblemTest
             Assert.AreEqual("WB", sortedIndianCensusData[lengthOfSoretedData].stateCode);
         }
 
+
+        //US Census Data
+
+        [Test]
+        public void givenUsCensusCSVFile_ShouldReturnsCorrectRecords() {
+            int numberOfRecords = censusAnalyzer.LoadUsCensusData(UC_CENSUS_DATA,US_CENSUS_DATA_HEADERS);
+            Assert.AreEqual(51, numberOfRecords);
+        }
+
+        [Test]
+        public void givenUSCensuseData_WhenWrongFile_ShouldThrowException()
+        {
+            var wrongFile = Assert.Throws<CensusAnalyserException>(() => censusAnalyzer.LoadUsCensusData(WRONG_US_CSV_FILE_PATH, US_CENSUS_DATA_HEADERS));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.FILE_NOT_FOUND, wrongFile.type);
+        }
+
+        [Test]
+        public void givenUSCensuseData_WhenCorrectFileButTypeIncorrect_ShouldThrowException()
+        {
+            var wrongFile = Assert.Throws<CensusAnalyserException>(() => censusAnalyzer.LoadUsCensusData(WRONG_US_CSV_FILE_PATH, US_CENSUS_DATA_HEADERS));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.FILE_NOT_FOUND, wrongFile.type);
+        }
+
+        [Test]
+        public void givenUSCensusData_WhenCorrectFileButTypeIncorrect_ShouldThrowException()
+        {
+            var incorrectType = Assert.Throws<CensusAnalyserException>(() => censusAnalyzer.LoadUsCensusData(WRONG_US_CSV_FILE_TYPE, US_CENSUS_DATA_HEADERS));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.INVALID_TYPE, incorrectType.type);
+
+        }
+
+        [Test]
+        public void givenUSCensusData_WhenIncorrectDelimiter_ShouldThrowException()
+        {
+    
+            var incorrectDelimiter = Assert.Throws<CensusAnalyserException>(() => censusAnalyzer.LoadUsCensusData(INCORRECT_DELIMITER_US_CENSUS_DATA, US_CENSUS_DATA_HEADERS));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.INVALID_DELIMITER, incorrectDelimiter.type);
+
+        }
+
+        [Test]
+        public void givenUSCensusData_WhenCorrectFileButHeaderIncorrect_ShouldThrowException()
+        {
+        
+            var incorrectHeader = Assert.Throws<CensusAnalyserException>(() => censusAnalyzer.LoadUsCensusData(INCORRECT_HEADER_US_CENSUS_DATA, US_CENSUS_DATA_HEADERS));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.INVALID_HEADER, incorrectHeader.type);
+
+        }
     }
 }

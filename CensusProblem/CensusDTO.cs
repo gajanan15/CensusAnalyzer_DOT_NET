@@ -28,5 +28,12 @@ namespace CensusProblem.POCO
             this.area = censusCSV.area;
             this.density = censusCSV.density;
         }
+
+        public CensusDTO(USCensusCSV uSCensusCSV) {
+            this.stateName = uSCensusCSV.state;
+            this.population = uSCensusCSV.population;
+            this.area = uSCensusCSV.totalArea;
+            this.density = uSCensusCSV.populationDensity;
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace CensusProblem
 {
     public class CensusAnalyzer : ICsvBuilder
     {
+        //public enum County { INDIA, US};
+
         string[] data;
         public Dictionary<int, CensusDTO> stateDictionary = new Dictionary<int, CensusDTO>();
         int counter = 0;
@@ -90,6 +92,35 @@ namespace CensusProblem
                     return censusList.OrderBy(x => x.area).ToList();
                 default: return censusList;
             }    
+        }
+
+        public int LoadUsCensusData(string filePath,string dataHeader) {
+            if (!File.Exists(filePath)) {
+                throw new CensusAnalyserException("File Not Found", CensusAnalyserException.ExceptionType.FILE_NOT_FOUND);
+            }
+
+            if (Path.GetExtension(filePath) != ".csv")
+            {
+                throw new CensusAnalyserException("Invalid File Type", CensusAnalyserException.ExceptionType.INVALID_TYPE);
+            }
+
+            data = File.ReadAllLines(filePath);
+
+            if (data[0] != dataHeader)
+            {
+                throw new CensusAnalyserException("Invalid Header", CensusAnalyserException.ExceptionType.INVALID_HEADER);
+            }
+
+            foreach (string delimiter in data)
+            {
+                if (!delimiter.Contains(","))
+                {
+                    throw new CensusAnalyserException("Invalid Delimiter", CensusAnalyserException.ExceptionType.INVALID_DELIMITER);
+                }
+            }
+
+            return data.Length - 1;
+
         }
     }
 }
