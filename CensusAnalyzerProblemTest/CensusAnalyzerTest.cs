@@ -287,5 +287,21 @@ namespace CensusAnalyzerProblemTest
             Assert.AreEqual(CensusAnalyserException.ExceptionType.INVALID_HEADER, incorrectHeader.type);
 
         }
+
+        [Test]
+        public void GivenUSCensusData_WhenSortedOnPopulation_ShouldReturnMostPopulationState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS,"population","DESC").ToString();
+            USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
+            Assert.AreEqual("California", sortedUSCensusCSV[0].stateName);
+        }
+
+        [Test]
+        public void GivenUSCensusData_WhenSortedOnPopulation_ShouldReturnLeastPopulationState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS, "population", "ASC").ToString();
+            USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
+            Assert.AreEqual("Wyoming", sortedUSCensusCSV[0].stateName);
+        }
     }
 }
