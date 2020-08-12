@@ -9,7 +9,7 @@ namespace CensusProblem
 
         public enum ExceptionType
         {
-            FILE_NOT_FOUND, INVALID_TYPE, INVALID_DELIMITER, INVALID_HEADER
+            FILE_NOT_FOUND, INVALID_TYPE, INVALID_DELIMITER, INVALID_HEADER, INVALID_COUNTRY
         }
 
         public ExceptionType type;
