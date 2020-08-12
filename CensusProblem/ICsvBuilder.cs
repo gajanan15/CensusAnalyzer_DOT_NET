@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CensusProblem.POCO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,6 @@ namespace CensusProblem
 {
    public interface ICsvBuilder
     {
-        public object LoadCensusData(string filePath, string dataHeader);
+        public Dictionary<string,CensusDTO> LoadCensusData(string filePath, string dataHeader);
     }
 }

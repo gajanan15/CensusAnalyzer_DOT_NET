@@ -13,6 +13,12 @@ namespace CensusProblem.POCO
         public long population;
         public long area;
         public long density;
+        public long housingUnits;
+        public double totalArea;
+        public double waterArea;
+        public double landArea;
+        public double housingDensity;
+        public double populationDensity;
 
         public CensusDTO(StateCodeCSV stateCodeCSVDAO)
         {
@@ -30,10 +36,15 @@ namespace CensusProblem.POCO
         }
 
         public CensusDTO(USCensusCSV uSCensusCSV) {
-            this.stateName = uSCensusCSV.state;
+            this.stateCode = uSCensusCSV.stateId;
+            this.stateName = uSCensusCSV.stateName;
             this.population = uSCensusCSV.population;
-            this.area = uSCensusCSV.totalArea;
-            this.density = uSCensusCSV.populationDensity;
+            this.housingUnits = uSCensusCSV.housingUnits;
+            this.totalArea = uSCensusCSV.totalArea;
+            this.waterArea = uSCensusCSV.waterArea;
+            this.landArea = uSCensusCSV.landArea;
+            this.populationDensity = uSCensusCSV.populationDensity;
+            this.housingDensity = uSCensusCSV.housingDensity;
         }
     }
 }

@@ -10,17 +10,12 @@ namespace CensusProblem
 {
     public class CensusAnalyzer : ICsvBuilder
     {
-        //public enum County { INDIA, US};
-
         string[] data;
-        public Dictionary<int, CensusDTO> stateDictionary = new Dictionary<int, CensusDTO>();
-        int counter = 0;
-
-        public delegate object CSVData(string filePath, string dataHeader);
-
-        public object LoadCensusData(string filePath, string dataHeader)
+        public Dictionary<string, CensusDTO> censusDictionary;
+      
+        public Dictionary<string,CensusDTO> LoadCensusData(string filePath, string dataHeader)
         {
-            stateDictionary = new Dictionary<int, CensusDTO>();
+            censusDictionary = new Dictionary<string, CensusDTO>();
 
             if (!File.Exists(filePath))
             {
@@ -48,26 +43,30 @@ namespace CensusProblem
                     throw new CensusAnalyserException("Invalid Delimiter", CensusAnalyserException.ExceptionType.INVALID_DELIMITER);
                 }
 
-                counter++;
+               
                 string[] column = delimiter.Split(",");
                 if (filePath.Contains("IndiaStateCensusData")) {
-                    stateDictionary.Add(counter,new CensusDTO(new StateCensusCSV(column[0], column[1], column[2], column[3])));
+                    censusDictionary.Add(column[0],new CensusDTO(new StateCensusCSV(column[0], column[1], column[2], column[3])));
                 }
                 if (filePath.Contains("IndiaStateCode")) {
-                    stateDictionary.Add(counter, new CensusDTO(new StateCodeCSV(column[0], column[1], column[2], column[3])));
+                    censusDictionary.Add(column[1], new CensusDTO(new StateCodeCSV(column[0], column[1], column[2], column[3])));
+                }
+                if (filePath.Contains("USCensusData")) {
+                    censusDictionary.Add(column[1], new CensusDTO(new USCensusCSV(column[0], column[1], column[2], column[3], column[4], column[5], column[6], column[7], column[8])));
                 }
             }
 
-            return stateDictionary.ToDictionary(d=> d.Key, d=> d.Value);
+            return censusDictionary;
 
         }
 
         public object GetSortedData(string filePath, string header,string field,string order)
         {
+
             if (!File.Exists(filePath)) {
                 throw new CensusAnalyserException("File Not Found", CensusAnalyserException.ExceptionType.FILE_NOT_FOUND);
             }
-            var censusData = (Dictionary<int, CensusDTO>)LoadCensusData(filePath, header);
+            var censusData = LoadCensusData(filePath, header);
             List<CensusDTO> censusList = censusData.Values.ToList();
             List<CensusDTO> sortedLists = getSoretdField(field, censusList);
 
@@ -94,32 +93,10 @@ namespace CensusProblem
             }    
         }
 
-        public int LoadUsCensusData(string filePath,string dataHeader) {
-            if (!File.Exists(filePath)) {
-                throw new CensusAnalyserException("File Not Found", CensusAnalyserException.ExceptionType.FILE_NOT_FOUND);
-            }
-
-            if (Path.GetExtension(filePath) != ".csv")
-            {
-                throw new CensusAnalyserException("Invalid File Type", CensusAnalyserException.ExceptionType.INVALID_TYPE);
-            }
-
-            data = File.ReadAllLines(filePath);
-
-            if (data[0] != dataHeader)
-            {
-                throw new CensusAnalyserException("Invalid Header", CensusAnalyserException.ExceptionType.INVALID_HEADER);
-            }
-
-            foreach (string delimiter in data)
-            {
-                if (!delimiter.Contains(","))
-                {
-                    throw new CensusAnalyserException("Invalid Delimiter", CensusAnalyserException.ExceptionType.INVALID_DELIMITER);
-                }
-            }
-
-            return data.Length - 1;
+        public Dictionary<string, CensusDTO> LoadUsCensusData(string filePath,string dataHeader) 
+        {
+           
+            return LoadCensusData(filePath, dataHeader);
 
         }
     }
