@@ -34,7 +34,6 @@ namespace CensusAnalyzerProblemTest
         static string INCORRECT_HEADER_US_CENSUS_DATA = @"C:\Users\Admin\source\repos\CensusProblem\CensusAnalyzerProblemTest\CSV Files\IncorrectHeaderUSCensusData.csv";
 
 
-
         //HEADER
         static string INDIAN_CENSUS_HEADERS = "State,Population,AreaInSqKm,DensityPerSqKm";
         static string INDIAN_STATE_CODE_HEADERS = "SrNo,State Name,TIN,StateCode";
@@ -302,6 +301,39 @@ namespace CensusAnalyzerProblemTest
             string sortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS, "population", "ASC").ToString();
             USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
             Assert.AreEqual("Wyoming", sortedUSCensusCSV[0].stateName);
+        }
+
+
+        [Test]
+        public void GivenUSCensusData_WhenSortedOnPopulationDensity_ShouldReturnMostPopulationDensityState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS, "populationDensity", "DESC").ToString();
+            USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
+            Assert.AreEqual("District of Columbia", sortedUSCensusCSV[0].stateName);
+        }
+
+        [Test]
+        public void GivenUSCensusData_WhenSortedOnPopulationDensity_ShouldReturnLeastPopulationDensityState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS, "populationDensity", "ASC").ToString();
+            USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
+            Assert.AreEqual("Alaska", sortedUSCensusCSV[0].stateName);
+        }
+
+        [Test]
+        public void GivenUSCensusData_WhenSortedOnTotalArea_ShouldReturnMostTotalAreaState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS, "totalArea", "DESC").ToString();
+            USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
+            Assert.AreEqual("Alaska", sortedUSCensusCSV[0].stateName);
+        }
+
+        [Test]
+        public void GivenUSCensusData_WhenSortedOnTotalArea_ShouldReturnLeastTotalAreaState()
+        {
+            string sortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS, "totalArea", "ASC").ToString();
+            USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
+            Assert.AreEqual("District of Columbia", sortedUSCensusCSV[0].stateName);
         }
     }
 }

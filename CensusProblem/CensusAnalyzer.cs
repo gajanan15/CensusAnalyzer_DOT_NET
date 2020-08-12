@@ -49,6 +49,10 @@ namespace CensusProblem
                     return censusList.OrderBy(x => x.density).ToList();
                 case "area":
                     return censusList.OrderBy(x => x.area).ToList();
+                case "populationDensity":
+                    return censusList.OrderBy(x => x.populationDensity).ToList();
+                case "totalArea":
+                    return censusList.OrderBy(x => x.totalArea).ToList();
                 default: return censusList;
             }    
         }
