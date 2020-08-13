@@ -335,5 +335,16 @@ namespace CensusAnalyzerProblemTest
             USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(sortedData);
             Assert.AreEqual("District of Columbia", sortedUSCensusCSV[0].stateName);
         }
+
+        [Test]
+        public void GievnCensusData_WhenSortedUSAndIndiaOnPopulationDensity_SholudReturnMostPopulousState()
+        {
+            string indianSortedData = censusAnalyzer.GetSortedData(Country.INDIA, CSVFilePath, INDIAN_CENSUS_HEADERS, "density", "DESC").ToString();
+            StateCensusCSV[] sortedIndianCensusCSV = JsonConvert.DeserializeObject<StateCensusCSV[]>(indianSortedData);
+
+            string usSortedData = censusAnalyzer.GetSortedData(Country.US, UC_CENSUS_DATA, US_CENSUS_DATA_HEADERS, "populationDensity", "DESC").ToString();
+            USCensusCSV[] sortedUSCensusCSV = JsonConvert.DeserializeObject<USCensusCSV[]>(usSortedData);
+            Assert.AreEqual(true, ((sortedIndianCensusCSV[0].density).CompareTo((long)sortedUSCensusCSV[0].populationDensity)) < 0);
+        }
     }
 }

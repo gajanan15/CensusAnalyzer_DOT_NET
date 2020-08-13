@@ -20,9 +20,9 @@ namespace CensusProblem
             return censusDictionary;
         }
 
+       
         public object GetSortedData(Country country, string filePath, string header,string field,string order)
         {
-
             if (!File.Exists(filePath)) {
                 throw new CensusAnalyserException("File Not Found", CensusAnalyserException.ExceptionType.FILE_NOT_FOUND);
             }
